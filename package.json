@@ -1,0 +1,23 @@
+{
+  "name": "ImageUploaderCli",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "sharenode": "./index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "clipboardy": "^2.3.0",
+    "form-data": "^3.0.1",
+    "get-value": "^3.0.1",
+    "node-notifier": "^8.0.0",
+    "qs": "^6.9.4"
+  }
+}
