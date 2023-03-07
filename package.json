@@ -1,13 +1,13 @@
 {
-  "name": "ImageUploaderCli",
+  "name": "media-uploader-cli",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "bin": {
-    "sharenode": "./index.js"
+    "media-uploader-cli": "./index.js"
   },
   "keywords": [],
   "author": "",

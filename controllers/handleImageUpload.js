@@ -8,31 +8,39 @@ const { imageUpload } = require("../config.json");
 const { default: axios } = require("axios");
 
 /**
- * 
- * @param {Array<String>} argResponse 
+ *
+ * @param {Array<String>} argResponse
  */
 module.exports = async (argResponse) => {
-    const imagePath = argResponse[0];
-    
-    const requestData = imageUpload.request;
+  exec(
+    "notify-send -a 'Image Uploader' -i ~/.face 'Upload started' 'Image copied to clipboard'"
+  );
+  const imagePath = argResponse[0];
 
-    const fileBuf = await fs.promises.readFile(imagePath);
+  const requestData = imageUpload.request;
 
-    const formData = new FormData();
-    formData.append(requestData.formFileKey, fileBuf, "uploaded.png");
+  const fileBuf = await fs.promises.readFile(imagePath);
 
-    const response = await axios(requestData.url, {
-        method: requestData.method,
-        headers: {
-            "Content-Type": "multipart/form-data",
-            ...requestData.headers
-        },
-        data: formData
-    }).catch(console.error);
+  const formData = new FormData();
+  formData.append(requestData.formFileKey, fileBuf, "uploaded.png");
 
-    const copyLink = getValue(response.data, imageUpload.response.json.copyLink);
-    if(!copyLink) throw new Error(`Upload error: Couldn't find ${imageUpload.response.json.copyLink} in response json`)
-    clipboardy.writeSync(copyLink);
-    
-    exec(`notify-send -a AShareNode -i ~/.face "Upload done" "Copied ${response.data.data.hash} to clipboard"`);
-}
+  const response = await axios(requestData.url, {
+    method: requestData.method,
+    headers: {
+      "Content-Type": "multipart/form-data",
+      ...requestData.headers,
+    },
+    data: formData,
+  }).catch(console.error);
+
+  const copyLink = getValue(response.data, imageUpload.response.json.copyLink);
+  if (!copyLink)
+    throw new Error(
+      `Upload error: Couldn't find ${imageUpload.response.json.copyLink} in response json`
+    );
+  clipboardy.writeSync(copyLink);
+
+  exec(
+    `notify-send -a 'Image Uploader' -i ~/.face "Upload done" "Copied ${response.data.data.hash} to clipboard"`
+  );
+};
